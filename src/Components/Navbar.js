@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ authenticate, setAuthenticate }) => {
   const menuList = [
     "여성",
     "Divided",
@@ -21,14 +21,33 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  const goToHome = () => {
+    navigate("/");
+  };
+
+  const search = (e) => {
+    if (e.key === "Enter") {
+      let keyword = e.target.value;
+
+      navigate(`/?q=${keyword}`);
+    }
+  };
+
+  const Logout = () => {
+    setAuthenticate(false);
+  };
+
   return (
     <div>
       <div className="login-button" onClick={goToLogin}>
         <FontAwesomeIcon icon={icon({ name: "user" })} />
-        <div className="">Login</div>
+        <div className="" onClick={Logout}>
+          {authenticate ? "Logout" : "Login"}
+        </div>
       </div>
       <div className="nav-section">
         <img
+          onClick={goToHome}
           width={100}
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM6neCEOC6NNCJ2_iL3O8GzEf0nO9_-Cj4yyUvwYCMuA&s"
           alt=""
@@ -42,7 +61,7 @@ const Navbar = () => {
         </ul>
         <div className="search-div">
           <FontAwesomeIcon icon={icon({ name: "search" })} />
-          <input type="text" />
+          <input type="text" onKeyDown={search} />
         </div>
       </div>
     </div>

@@ -54,3 +54,8 @@
 .product_card img:hover {
   width: 110%;
 }
+
+.product-img {
+  display: flex;
+  justify-content: flex-end;
+}
